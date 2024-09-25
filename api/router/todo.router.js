@@ -16,4 +16,13 @@ const verifyToken = require('../middleware/auth.middleware');
  */
 router.post('/', verifyToken, require('../controller/todo.controller').createTodo);
 
+/**
+ * Update To-Do Route
+ * @name /api/todos/:id
+ * @description This route handles updating an existing to-do item.
+ * The specific logic for updating a to-do item is defined in the todo controller.
+ * @memberof module:todoRouter
+ */
+router.put('/:id', verifyToken, require('../controller/todo.controller').updateTodo);
+
 module.exports = router;
