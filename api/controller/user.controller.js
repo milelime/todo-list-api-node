@@ -1,3 +1,8 @@
+/**
+ * @module UserController
+ * @description Handles user-related operations such as registration.
+ */
+
 const pool = require('../utility/connection.utility');
 const { validateUserRegistration, validateRequestBody } = require('../utility/user.utility');
 const bcrypt = require('bcrypt');
@@ -7,18 +12,14 @@ require('dotenv').config();
 /**
  * The function `registerUser` handles user registration by validating input, hashing the password,
  * inserting user data into a database, generating a JWT token, and sending a response.
- * @param req - The `req` parameter in the `registerUser` function represents the HTTP request object,
- * which contains information about the incoming request from the client, such as request headers,
- * parameters, body, and more. It is typically provided by the Express.js framework when handling HTTP
- * requests.
- * @param res - The `res` parameter in the `registerUser` function is the response object that will be
- * used to send the response back to the client making the request. It is typically an instance of the
- * Express response object in Node.js applications. The response object has methods like `res.status()`
- * to set the
- * @returns The `registerUser` function returns a response with status code 200 and a JSON object
- * containing a message indicating successful user registration and a JWT token. If an error occurs
- * during the registration process, it returns a response with status code 500 and an error message in
- * JSON format.
+ * @param {Object} req - The HTTP request object, containing information about the incoming request.
+ * @param {Object} req.body - The body of the request, containing user registration data.
+ * @param {string} req.body.name - The name of the user.
+ * @param {string} req.body.email - The email of the user.
+ * @param {string} req.body.password - The password of the user.
+ * @param {Object} res - The HTTP response object, used to send the response back to the client.
+ * @returns {Promise<void>} - A promise that resolves to sending a response to the client.
+ * @throws {Error} - Throws an error if validation fails or if there is an issue with database interaction.
  */
 const registerUser = async (req, res) => {
 	try {

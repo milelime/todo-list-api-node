@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
-
 const port = 6969;
+
+/**
+ * Main server file.
+ * @module Server
+ */
 
 app.use(bodyparser.json({ limit: '50mb' }));
 app.use(bodyparser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));

@@ -1,0 +1,5 @@
+{
+	"watch": ["api/controller", "api/utility", "api/router", "server.js"],
+	"ext": "js",
+	"exec": "npm run doc"
+}
