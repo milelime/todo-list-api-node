@@ -38,7 +38,6 @@ const createTodo = async (req, res) => {
 
 		// Verify the JWT token
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
-		console.log(decoded);
 
 		// Insert a new to-do item
 		const SQL = `
@@ -50,7 +49,7 @@ const createTodo = async (req, res) => {
 		const [results] = await pool.query(SQL, [title, description, decoded.id]);
 
 		// Send the response
-		return res.status(200).json({ message: 'To-do item created successfully' });
+		return res.status(200).json({ id: results.insertId, title, description });
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ error: error.message });
