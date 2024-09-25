@@ -119,7 +119,133 @@ const updateTodo = async (req, res) => {
 	}
 };
 
+/**
+ * The function `deleteTodo` handles deleting an existing to-do item by deleting the data from the database and sending a response.
+ * @param {Object} req - The HTTP request object, containing information about the incoming request.
+ * @param {Object} req.headers - The headers of the request, containing the JWT token for authentication.
+ * @param {string} req.headers.authorization - The JWT token for authentication.
+ * @param {Object} res - The HTTP response object, used to send the response back to the client.
+ * @returns {Promise<void>} - A promise that resolves to sending a response to the client.
+ * @throws {Error} - Throws an error if there is an issue with database interaction.
+ * @memberof module:todoController
+ */
+const deleteTodo = async (req, res) => {
+	try {
+		// Extract the JWT token from the headers
+		const token = req.headers.authorization;
+
+		// Verify the JWT token
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+		// Extract the to-do item ID from the request parameters
+		const { id } = req.params;
+
+		// Check if the user has permission to delete the to-do item
+		const [todo] = await pool.query('SELECT * FROM todo WHERE id = ?', [id]);
+
+		if (todo.length === 0) {
+			return res.status(404).json({ error: 'To-Do item not found' });
+		}
+
+		if (todo[0].user_id !== decoded.id) {
+			return res.status(403).json({ message: 'Forbidden' });
+		}
+
+		// Delete the to-do item
+		const SQL = 'DELETE FROM todo WHERE id = ?';
+
+		// Execute the query
+		await pool.query(SQL, [id]);
+
+		// Send the response
+		return res.status(204).send();
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: error.message });
+	}
+};
+
+/**
+ * Get To-Do Items
+
+Get the list of to-do items using the following request:
+
+GET /todos?page=1&limit=10
+
+User must be authenticated to access the tasks and the response should be paginated. Respond with the list of to-do items along with the pagination details.
+
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Buy groceries",
+      "description": "Buy milk, eggs, bread"
+    },
+    {
+      "id": 2,
+      "title": "Pay bills",
+      "description": "Pay electricity and water bills"
+    }
+  ],
+  "page": 1,
+  "limit": 10,
+  "total": 2
+}
+ */
+
+/**
+ * The function `getTodos` handles retrieving a list of to-do items from the database and sending a response.
+ * @param {Object} req - The HTTP request object, containing information about the incoming request.
+ * @param {Object} req.query - The query parameters of the request, containing pagination details.
+ * @param {number} req.query.page - The page number for pagination.
+ * @param {number} req.query.limit - The limit of items per page for pagination.
+ * @param {Object} req.headers - The headers of the request, containing the JWT token for authentication.
+ * @param {string} req.headers.authorization - The JWT token for authentication.
+ * @param {Object} res - The HTTP response object, used to send the response back to the client.
+ * @returns {Promise<void>} - A promise that resolves to sending a response to the client.
+ * @throws {Error} - Throws an error if there is an issue with database interaction.
+ * @memberof module:todoController
+ */
+const getTodos = async (req, res) => {
+	try {
+		// Extract the JWT token from the headers
+		const token = req.headers.authorization;
+
+		// Verify the JWT token
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+		// Extract the pagination parameters from the query
+		const { page = 1, limit = 10 } = req.query;
+
+		// Calculate the offset based on the page and limit
+		const offset = (page - 1) * limit;
+
+		// Get the total count of to-do items
+		const [total] = await pool.query('SELECT COUNT(*) AS total FROM todo WHERE user_id = ?', [decoded.id]);
+
+		// Get the list of to-do items
+		const SQL = `
+            SELECT id, title, description
+            FROM todo
+            WHERE user_id = ?
+            LIMIT ?
+            OFFSET ?
+        `;
+
+		// Execute the query
+		const [todos] = await pool.query(SQL, [decoded.id, parseInt(limit), parseInt(offset)]);
+
+		// Send the response
+		return res.status(200).json({ data: todos, page, limit, total: total[0].total });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: error.message });
+	}
+};
+
 module.exports = {
 	createTodo,
 	updateTodo,
+	deleteTodo,
+	getTodos,
 };

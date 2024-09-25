@@ -25,4 +25,22 @@ router.post('/', verifyToken, require('../controller/todo.controller').createTod
  */
 router.put('/:id', verifyToken, require('../controller/todo.controller').updateTodo);
 
+/**
+ * Delete To-Do Route
+ * @name /api/todos/:id
+ * @description This route handles deleting an existing to-do item.
+ * The specific logic for deleting a to-do item is defined in the todo controller.
+ * @memberof module:todoRouter
+ */
+router.delete('/:id', verifyToken, require('../controller/todo.controller').deleteTodo);
+
+/**
+ * Get To-Do Items Route
+ * @name /api/todos
+ * @description This route handles getting all to-do items.
+ * The specific logic for getting all to-do items is defined in the todo controller.
+ * @memberof module:todoRouter
+ */
+router.get('/', verifyToken, require('../controller/todo.controller').getTodos);
+
 module.exports = router;
