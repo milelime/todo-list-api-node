@@ -2,12 +2,12 @@
 	"name": "todo-list-api-node",
 	"version": "1.0.0",
 	"description": "A small RESTful API for interacting with todo list tasks",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon server",
+		"start": "nodemon server.js",
 		"doc": "jsdoc -c jsdoc.json",
-		"doc:watch": "nodemon"
+		"doc:watch": "nodemon --exec \"npm run doc\""
 	},
 	"author": "",
 	"license": "ISC",

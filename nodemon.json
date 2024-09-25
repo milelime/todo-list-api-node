@@ -1,5 +1,1 @@
-{
-	"watch": ["api/controller", "api/utility", "api/router", "server.js", "api/middleware"],
-	"ext": "js",
-	"exec": "npm run doc"
-}
+{}
