@@ -1,0 +1,20 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3307,
+            "driver": "MySQL",
+            "name": "todo",
+            "database": "todo",
+            "username": "root",
+            "password": "strong_password"
+        }
+    ],
+    "docwriter.progress.trackFunctions": true,
+    "docwriter.progress.trackClasses": false
+}
