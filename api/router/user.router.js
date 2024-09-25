@@ -24,4 +24,13 @@ router.post('/register', require('../controller/user.controller').registerUser);
  */
 router.post('/login', require('../controller/user.controller').loginUser);
 
+/**
+ * User Refresh Token Route
+ * @name /api/user/refresh-token
+ * @description This route handles user refresh token requests.
+ * The specific logic for user refresh token is defined in the user controller.
+ * @memberof module:userRouter
+ */
+router.post('/refresh-token', require('../controller/user.controller').refreshToken);
+
 module.exports = router;

@@ -116,7 +116,42 @@ const loginUser = async (req, res) => {
 	}
 };
 
+/**
+ * The function `refreshToken` handles refreshing a JWT token by verifying the refresh token,
+ * generating a new JWT token, and sending a response.
+ * @param {Object} req - The HTTP request object, containing information about the incoming request.
+ * @param {Object} req.body - The body of the request, containing the refresh token.
+ * @param {string} req.body.token - The refresh token to be verified.
+ * @param {Object} res - The HTTP response object, used to send the response back to the client.
+ * @returns {Promise<void>} - A promise that resolves to sending a response to the client.
+ * @throws {Error} - Throws an error if the refresh token is missing or invalid.
+ * @memberof module:userController
+ */
+const refreshToken = async (req, res) => {
+	try {
+		const { token } = req.body;
+		if (!token) {
+			return res.status(401).json({ error: 'Refresh token is required' });
+		}
+
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+		const newToken = jwt.sign(
+			{ id: decoded.id, name: decoded.name, email: decoded.email },
+			process.env.JWT_SECRET,
+			{
+				expiresIn: '1h',
+			},
+		);
+
+		return res.status(200).json({ token: newToken });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ error: error.message });
+	}
+};
+
 module.exports = {
 	registerUser,
 	loginUser,
+	refreshToken,
 };
