@@ -6,6 +6,11 @@ const port = 6969;
 /**
  * Main server file.
  * @module Server
+ * @description This module is the main server file for the application.
+ * It sets up the server and listens on a specified port.
+ * It also includes middleware for parsing JSON and URL-encoded data.
+ * The main routing for the application is set up using Express.js.
+ * The base API path is defined and specific route handlers are included for different parts of the application.
  */
 
 app.use(bodyparser.json({ limit: '50mb' }));

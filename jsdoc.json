@@ -1,6 +1,6 @@
 {
 	"source": {
-		"include": ["api/controller", "api/utility", "api/router", "server.js"],
+		"include": ["api/controller", "api/utility", "api/router", "server.js", "api/middleware"],
 		"exclude": ["node_modules"],
 		"includePattern": ".+\\.js(doc|x)?$",
 		"excludePattern": "(^|\\/|\\\\)_"

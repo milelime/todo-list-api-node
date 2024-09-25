@@ -3,14 +3,16 @@ const path = require('path');
 
 /**
  * API routes.
- * @module ApiRouter
+ * @module apiRouter
+ * @description This module provides routes for the base API path.
+ * It includes a route to get the API status.
  */
 
 /**
  * Route to get API status.
  * @name GET /
  * @function
- * @memberof module:ApiRouter
+ * @memberof module:apiRouter
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  */

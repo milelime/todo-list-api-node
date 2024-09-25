@@ -1,5 +1,5 @@
 /**
- * @module UserUtility
+ * @module userUtility
  * @description Provides utility functions for user validation.
  */
 
@@ -8,6 +8,7 @@
  * @param {Object} body - The request body.
  * @param {string[]} requiredFields - The list of required fields.
  * @throws {Error} - Throws an error if any of the required fields are missing.
+ * @memberof module:userUtility
  */
 const validateRequestBody = (body, requiredFields) => {
 	for (const field of requiredFields) {
@@ -21,6 +22,7 @@ const validateRequestBody = (body, requiredFields) => {
  * Validates the user's name.
  * @param {string} name - The name of the user.
  * @throws {Error} - Throws an error if the name is invalid.
+ * @memberof module:userUtility
  */
 const validateName = (name) => {
 	if (!name) {
@@ -35,6 +37,7 @@ const validateName = (name) => {
  * Validates the user's email.
  * @param {string} email - The email of the user.
  * @throws {Error} - Throws an error if the email is invalid.
+ * @memberof module:userUtility
  */
 const validateEmail = (email) => {
 	if (!email) {
@@ -50,6 +53,7 @@ const validateEmail = (email) => {
  * Validates the user's password.
  * @param {string} password - The password of the user.
  * @throws {Error} - Throws an error if the password is invalid.
+ * @memberof module:userUtility
  */
 const validatePassword = (password) => {
 	if (!password) {
@@ -68,6 +72,7 @@ const validatePassword = (password) => {
  * @param {string} email - The email of the user.
  * @param {string} password - The password of the user.
  * @throws {Error} - Throws an error if any of the registration data is invalid.
+ * @memberof module:userUtility
  */
 const validateUserRegistration = (name, email, password) => {
 	validateName(name);
