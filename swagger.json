@@ -1,0 +1,255 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "Todo List API",
+		"description": "API documentation for the Todo List application"
+	},
+	"host": "localhost:3000",
+	"basePath": "/api",
+	"schemes": ["http"],
+	"paths": {
+		"/user/register": {
+			"post": {
+				"summary": "Register a new user",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"username": {
+									"type": "string"
+								},
+								"password": {
+									"type": "string"
+								}
+							},
+							"required": ["username", "password"]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User registered successfully",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"token": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/login": {
+			"post": {
+				"summary": "Login a user",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"username": {
+									"type": "string"
+								},
+								"password": {
+									"type": "string"
+								}
+							},
+							"required": ["username", "password"]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "User logged in successfully",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"token": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/refresh-token": {
+			"post": {
+				"summary": "Refresh user token",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Token refreshed successfully",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"token": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/todo": {
+			"post": {
+				"summary": "Create a new to-do item",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"title": {
+									"type": "string"
+								},
+								"description": {
+									"type": "string"
+								}
+							},
+							"required": ["title", "description"]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "To-do item created successfully",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/todos": {
+			"get": {
+				"summary": "Get all to-do items",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "List of to-do items",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string"
+									},
+									"title": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/todos/{id}": {
+			"put": {
+				"summary": "Update a to-do item",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"title": {
+									"type": "string"
+								},
+								"description": {
+									"type": "string"
+								}
+							},
+							"required": ["title", "description"]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "To-do item updated successfully"
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete a to-do item",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "To-do item deleted successfully"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {}
+}
